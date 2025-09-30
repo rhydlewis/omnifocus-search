@@ -15,10 +15,15 @@ The workflow provides multiple keyword commands to search different types of Omn
 - `.s [query]` - Search active tasks
 - `.sc [query]` - Search completed tasks
 - `.p [query]` - Search projects
+- `.lp` - List projects
 - `.i [query]` - Search inbox items
+- `.li` - List inbox items
 - `.t [query]` - Search tags
 - `.f [query]` - Search folders
 - `.v [query]` - Search perspectives
+- `.lt` - List tags
+- `.lf` - List folders
+- `.lv` - List perspectives
 - `.n [query]` - Search task notes
 
 ### Examples
@@ -27,13 +32,12 @@ The workflow provides multiple keyword commands to search different types of Omn
 - `.sc report` - Find completed tasks containing "report"
 - `.p home` - Find projects containing "home"
 - `.t work` - Find tags containing "work"
-- `.i` - Show all inbox items (empty query shows all)
 
 ## Requirements
 
 - macOS 10.14 or later
 - Alfred 4 or later with Powerpack
-- OmniFocus 3 or OmniFocus 4
+- OmniFocus Pro
 
 ## How It Works
 
@@ -46,4 +50,12 @@ This workflow uses AppleScript to communicate directly with OmniFocus. When you 
 
 ## Credits
 
-This workflow is a reimplementation of the original Node.js/SQLite-based Alfred-OmniFocus workflow, converted to use AppleScript and bash for better performance and compatibility.
+This workflow is a reimplementation of the original [Node.js/SQLite-based Alfred-OmniFocus workflow](https://github.com/rhydlewis/alfred-search-omnifocus), converted to use AppleScript and bash for better compatibility.
+
+Thanks to:
+
+* [Marko Kaestner](https://github.com/markokaestner): I used
+  the [in-depth workflow](https://github.com/markokaestner/of-task-actions) to provide some insight into how to search
+  Omnifocus.
+* [Danny Smith](https://github.com/dannysmith): for providing a new, and quite frankly, much improved workflow icon.
+* [Font Awesome](https://fontawesome.com/): for the other icons used in this workflow
