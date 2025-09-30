@@ -24,6 +24,7 @@ zip -r "$OUTPUT_FILE" \
     bin/main.sh \
     icons/*.png \
     lib/constants.sh \
+    icon.png \
     info.plist \
     README.md
 
