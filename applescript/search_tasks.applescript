@@ -1,4 +1,4 @@
--- Search tasks in OmniFocus
+-- Search tasks in OmniFocus (optimized version)
 -- Parameters:
 --   1. query (string): search text
 --   2. completed (string): "true" or "false"
@@ -7,27 +7,27 @@
 
 on run argv
 	-- Parse arguments
-	if (count of argv) ³ 1 then
+	if (count of argv) >= 1 then
 		set query to item 1 of argv
 	else
 		set query to ""
 	end if
-	
+
 	set isCompleted to false
-	if (count of argv) ³ 2 then
+	if (count of argv) >= 2 then
 		set isCompleted to (item 2 of argv is "true")
 	end if
-	
+
 	set isFlagged to false
-	if (count of argv) ³ 3 then
+	if (count of argv) >= 3 then
 		set isFlagged to (item 3 of argv is "true")
 	end if
-	
+
 	set activeOnly to true
-	if (count of argv) ³ 4 then
+	if (count of argv) >= 4 then
 		set activeOnly to (item 4 of argv is "true")
 	end if
-	
+
 	-- Search tasks in OmniFocus
 	tell application "OmniFocus"
 		tell default document
@@ -38,35 +38,23 @@ on run argv
 				else
 					set matchingTasks to (flattened tasks where completed is false)
 				end if
-				
-				-- Filter by name/query if provided
-				if query is not "" then
-					set filteredTasks to {}
-					repeat with t in matchingTasks
-						if name of t contains query then
-							set end of filteredTasks to t
-						end if
-					end repeat
-					set matchingTasks to filteredTasks
-				end if
-				
-				-- Filter by flagged status if needed
-				if isFlagged then
-					set filteredTasks to {}
-					repeat with t in matchingTasks
-						if flagged of t is true then
-							set end of filteredTasks to t
-						end if
-					end repeat
-					set matchingTasks to filteredTasks
-				end if
-				
+
+				-- Combined filtering in a single pass
+				set filteredTasks to {}
+				repeat with t in matchingTasks
+					-- Check both query and flagged status in a single condition
+					if ((query is "" or name of t contains query) and (not isFlagged or flagged of t is true)) then
+						set end of filteredTasks to t
+					end if
+				end repeat
+				set matchingTasks to filteredTasks
+
 				-- Process results
 				set resultList to {}
 				repeat with t in matchingTasks
 					set taskId to id of t as string
 					set taskName to name of t
-					
+
 					-- Get project name
 					set projectName to "Unknown"
 					try
@@ -87,7 +75,7 @@ on run argv
 							set projectName to "(No Project)"
 						end if
 					end try
-					
+
 					-- Determine status
 					set taskStatus to "active"
 					if completed of t then
@@ -95,12 +83,12 @@ on run argv
 					else if flagged of t then
 						set taskStatus to "flagged"
 					end if
-					
+
 					-- Format as: id|name|project|status
 					set taskString to taskId & "|" & taskName & "|" & projectName & "|" & taskStatus
 					set end of resultList to taskString
 				end repeat
-				
+
 				-- Join results with record separator and return
 				if (count of resultList) > 0 then
 					set AppleScript's text item delimiters to "###"
