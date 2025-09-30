@@ -271,7 +271,18 @@ case "$command_type" in
     "${WORKFLOW_DIR}/bin/cache_commands.sh" "$query"
     ;;
 
+  "check-update") # Check for updates
+    # Run the update checker script
+    "${WORKFLOW_DIR}/bin/update_checker.sh"
+    ;;
+
+  "install-update") # Install update
+    # Run the update installer script with the provided download URL
+    "${WORKFLOW_DIR}/bin/update_installer.sh" "$query"
+    ;;
+
   *) # Unknown command
+    # Default - show error for unknown command
     show_error "Unknown command" "Command type '$command_type' is not recognized"
     ;;
 esac

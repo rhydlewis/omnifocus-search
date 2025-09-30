@@ -21,6 +21,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>328162E7-9D92-4AB3-82AA-17D9A09C9913</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F11E5CB2-3B03-42FE-B0F1-5D974AF592A4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>401B7E69-F6C9-4BC7-9FD4-D8F585008DCB</key>
 		<array>
 			<dict>
@@ -198,7 +211,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Search OmniFocus</string>
+	<string>OmniFocus Search</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -862,6 +875,78 @@
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
 				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>.osu</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>./bin/main.sh "" check-update</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Check for updates to OmniFocus Search</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>328162E7-9D92-4AB3-82AA-17D9A09C9913</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./bin/main.sh "{query}" install-update</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>F11E5CB2-3B03-42FE-B0F1-5D974AF592A4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
 				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
@@ -1126,6 +1211,13 @@ Configuration:
 			<key>ypos</key>
 			<real>1225</real>
 		</dict>
+		<key>328162E7-9D92-4AB3-82AA-17D9A09C9913</key>
+		<dict>
+			<key>xpos</key>
+			<real>685</real>
+			<key>ypos</key>
+			<real>1265</real>
+		</dict>
 		<key>341C005C-0561-4A8A-97EA-2921BA85C8CE</key>
 		<dict>
 			<key>xpos</key>
@@ -1196,6 +1288,13 @@ Configuration:
 			<key>ypos</key>
 			<real>255</real>
 		</dict>
+		<key>F11E5CB2-3B03-42FE-B0F1-5D974AF592A4</key>
+		<dict>
+			<key>xpos</key>
+			<real>945</real>
+			<key>ypos</key>
+			<real>1265</real>
+		</dict>
 		<key>F685C73A-5119-484E-A680-213F816B0986</key>
 		<dict>
 			<key>xpos</key>
@@ -1265,7 +1364,7 @@ Configuration:
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>2.0.1</string>
+	<string>2.1.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/rhydlewis/omnifocus-search</string>
 </dict>

@@ -26,6 +26,8 @@ zip -r "$OUTPUT_FILE" \
     bin/cache_commands.sh \
     bin/setup_cache.sh \
     bin/add_cache_commands.sh \
+    bin/update_checker.sh \
+    bin/update_installer.sh \
     icons/*.png \
     lib/constants.sh \
     icon.png \
