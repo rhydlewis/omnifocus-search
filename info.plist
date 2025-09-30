@@ -60,19 +60,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>C83DC7F0-B937-46C5-9F47-75A2863745BC</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>80470FFB-F099-44DE-968C-C5F9E9FFD7F7</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>F685C73A-5119-484E-A680-213F816B0986</key>
 		<array>
 			<dict>
@@ -345,55 +332,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>p-script</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>.sa</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching active tasks...</string>
-				<key>script</key>
-				<string>./bin/main.sh "{query}" sa</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search active tasks in OmniFocus</string>
-				<key>title</key>
-				<string>Search OmniFocus Active Tasks</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>C83DC7F0-B937-46C5-9F47-75A2863745BC</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -855,27 +793,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>skipqueryencode</key>
-				<false/>
-				<key>skipvarencode</key>
-				<false/>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>omnifocus:///perspective/{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>341C005C-0561-4A8A-97EA-2921BA85C8CE</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -921,6 +838,27 @@
 			<string>v-script</string>
 			<key>version</key>
 			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>omnifocus:///perspective/{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>341C005C-0561-4A8A-97EA-2921BA85C8CE</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1046,13 +984,6 @@ Configuration:
 			<real>555</real>
 			<key>ypos</key>
 			<real>1105</real>
-		</dict>
-		<key>C83DC7F0-B937-46C5-9F47-75A2863745BC</key>
-		<dict>
-			<key>xpos</key>
-			<real>95</real>
-			<key>ypos</key>
-			<real>465</real>
 		</dict>
 		<key>F685C73A-5119-484E-A680-213F816B0986</key>
 		<dict>
