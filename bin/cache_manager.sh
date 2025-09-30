@@ -11,20 +11,25 @@ WORKFLOW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 # Get the home directory explicitly
 HOME_DIR=$(eval echo ~$USER)
 
-# Cache directory
-CACHE_DIR="${HOME_DIR}/.cache/alfred-omnifocus-search"
+# Alfred recommended cache directory
+CACHE_DIR="${HOME_DIR}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch"
 
 # Ensure cache directory exists
+mkdir -p "$CACHE_DIR"
 if [[ ! -d "$CACHE_DIR" ]]; then
-  mkdir -p "$CACHE_DIR/projects"
-  mkdir -p "$CACHE_DIR/folders"
-  mkdir -p "$CACHE_DIR/tags"
-  mkdir -p "$CACHE_DIR/perspectives"
-  mkdir -p "$CACHE_DIR/tasks"
-  mkdir -p "$CACHE_DIR/completed_tasks"
-  mkdir -p "$CACHE_DIR/inbox"
-  mkdir -p "$CACHE_DIR/notes"
+  echo "Error: Could not create cache directory at $CACHE_DIR" >&2
+  exit 1
 fi
+
+# Create subdirectories if they don't exist
+mkdir -p "$CACHE_DIR/projects"
+mkdir -p "$CACHE_DIR/folders"
+mkdir -p "$CACHE_DIR/tags"
+mkdir -p "$CACHE_DIR/perspectives"
+mkdir -p "$CACHE_DIR/tasks"
+mkdir -p "$CACHE_DIR/completed_tasks"
+mkdir -p "$CACHE_DIR/inbox"
+mkdir -p "$CACHE_DIR/notes"
 
 # Cache lifetimes in seconds
 PROJECTS_CACHE_LIFE=86400       # 24 hours
