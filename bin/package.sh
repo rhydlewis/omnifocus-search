@@ -22,6 +22,10 @@ zip -r "$OUTPUT_FILE" \
     bin/error_handler.sh \
     bin/format_xml.sh \
     bin/main.sh \
+    bin/cache_manager.sh \
+    bin/cache_commands.sh \
+    bin/setup_cache.sh \
+    bin/add_cache_commands.sh \
     icons/*.png \
     lib/constants.sh \
     icon.png \
