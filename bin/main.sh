@@ -18,171 +18,104 @@ if [[ "$query" == "(null)" ]]; then
 fi
 command_type="$2"
 
+# Define the function to execute the AppleScript and format output
+execute_and_cache() {
+  local entity_type="$1"
+  local script_path="$2"
+  local query="$3"
+  local additional_params="$4"
+
+  # Create settings directory if it doesn't exist
+  local settings_dir="${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings"
+  mkdir -p "$settings_dir" 2>/dev/null
+
+  # Debug log
+  echo "[$entity_type] execute_and_cache called at $(date)" > "${settings_dir}/execute_debug.log"
+  echo "Script: $script_path" >> "${settings_dir}/execute_debug.log"
+  echo "Query: $query" >> "${settings_dir}/execute_debug.log"
+  echo "Params: $additional_params" >> "${settings_dir}/execute_debug.log"
+
+  # Check if caching is enabled by reading the file directly
+  local caching_enabled="true"
+  if [ -f "${settings_dir}/OF_CACHING_ENABLED" ]; then
+    caching_enabled=$(cat "${settings_dir}/OF_CACHING_ENABLED")
+  fi
+  echo "Caching status: $caching_enabled" >> "${settings_dir}/execute_debug.log"
+
+  # Check cache first if caching is enabled
+  if [[ "$caching_enabled" == "true" ]]; then
+    cached_results=$(get_cache "$entity_type" "$query" "$additional_params")
+    if [[ $? -eq 0 ]]; then
+      # Cache hit
+      echo "Cache hit - returning cached results" >> "${settings_dir}/execute_debug.log"
+      echo "$cached_results"
+      return
+    fi
+    echo "Cache miss - executing AppleScript" >> "${settings_dir}/execute_debug.log"
+  else
+    echo "Caching disabled - executing AppleScript directly" >> "${settings_dir}/execute_debug.log"
+  fi
+
+  # Execute the AppleScript
+  results=$(/usr/bin/osascript "$script_path" "$query" "${@:5}")
+  xml_output=$(generate_xml_output "$entity_type" "$results")
+
+  # Save to cache if enabled
+  if [[ "$caching_enabled" == "true" ]]; then
+    echo "Saving results to cache" >> "${settings_dir}/execute_debug.log"
+    save_cache "$entity_type" "$query" "$additional_params" "$xml_output"
+  else
+    echo "Caching disabled - not saving to cache" >> "${settings_dir}/execute_debug.log"
+  fi
+
+  echo "$xml_output"
+}
+
 # Process commands
 case "$command_type" in
   "s") # Search tasks
     completed="false"
     flagged="false"
     active_only="true"
-
-    # Try to get from cache first
     additional_params="completed:${completed}_flagged:${flagged}_active:${active_only}"
-    cached_results=$(get_cache "task" "$query" "$additional_params")
 
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "$query" "$completed" "$flagged" "$active_only")
-      xml_output=$(generate_xml_output "task" "$results")
-
-      # Save to cache
-      save_cache "task" "$query" "$additional_params" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "task" "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "$query" "$additional_params" "$completed" "$flagged" "$active_only"
     ;;
 
   "sc") # Search completed tasks
     completed="true"
     flagged="false"
     active_only="false"
-
-    # Try to get from cache first
     additional_params="completed:${completed}_flagged:${flagged}_active:${active_only}"
-    cached_results=$(get_cache "task" "$query" "$additional_params")
 
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "$query" "$completed" "$flagged" "$active_only")
-      xml_output=$(generate_xml_output "task" "$results")
-
-      # Save to cache
-      save_cache "task" "$query" "$additional_params" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "task" "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "$query" "$additional_params" "$completed" "$flagged" "$active_only"
     ;;
 
   "p") # Search projects
     active_only="true"
-
-    # Try to get from cache first
     additional_params="active:${active_only}"
-    cached_results=$(get_cache "project" "$query" "$additional_params")
 
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_projects.applescript" "$query" "$active_only")
-      xml_output=$(generate_xml_output "project" "$results")
-
-      # Save to cache
-      save_cache "project" "$query" "$additional_params" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "project" "${WORKFLOW_DIR}/applescript/search_projects.applescript" "$query" "$additional_params" "$active_only"
     ;;
 
   "i") # Search inbox
-    # Try to get from cache first
-    cached_results=$(get_cache "inbox" "$query" "")
-
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_inbox.applescript" "$query")
-      xml_output=$(generate_xml_output "task" "$results")
-
-      # Save to cache
-      save_cache "inbox" "$query" "" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "inbox" "${WORKFLOW_DIR}/applescript/search_inbox.applescript" "$query" ""
     ;;
 
   "t") # Search tags
-    # Try to get from cache first
-    cached_results=$(get_cache "tag" "$query" "")
-
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tags.applescript" "$query")
-      xml_output=$(generate_xml_output "tag" "$results")
-
-      # Save to cache
-      save_cache "tag" "$query" "" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "tag" "${WORKFLOW_DIR}/applescript/search_tags.applescript" "$query" ""
     ;;
 
   "f") # Search folders
-    # Try to get from cache first
-    cached_results=$(get_cache "folder" "$query" "")
-
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_folders.applescript" "$query")
-      xml_output=$(generate_xml_output "folder" "$results")
-
-      # Save to cache
-      save_cache "folder" "$query" "" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "folder" "${WORKFLOW_DIR}/applescript/search_folders.applescript" "$query" ""
     ;;
 
   "v") # List perspectives
-    # Try to get from cache first
-    cached_results=$(get_cache "perspective" "$query" "")
-
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/get_perspectives.applescript" "$query")
-      xml_output=$(generate_xml_output "perspective" "$results")
-
-      # Save to cache
-      save_cache "perspective" "$query" "" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "perspective" "${WORKFLOW_DIR}/applescript/get_perspectives.applescript" "$query" ""
     ;;
 
   "n") # Search notes
-    # Try to get from cache first
-    cached_results=$(get_cache "note" "$query" "")
-
-    if [[ $? -eq 0 ]]; then
-      # Cache hit
-      echo "$cached_results"
-    else
-      # Cache miss - call the AppleScript and process results
-      results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_notes.applescript" "$query")
-      xml_output=$(generate_xml_output "task" "$results")
-
-      # Save to cache
-      save_cache "note" "$query" "" "$xml_output"
-
-      echo "$xml_output"
-    fi
+    execute_and_cache "note" "${WORKFLOW_DIR}/applescript/search_notes.applescript" "$query" ""
     ;;
 
   "find-of-db") # Find OmniFocus database
@@ -273,6 +206,24 @@ case "$command_type" in
 
   "cache-commands") # Show cache commands
     "${WORKFLOW_DIR}/bin/cache_commands.sh" "$query"
+    ;;
+
+  "enable-caching") # Enable caching
+    # Handle "enable" as a command without arguments
+    if [[ "$query" == "enable" || -z "$query" ]]; then
+      enable_caching
+    else
+      show_error "Invalid Command" "Expected 'enable' but got '$query'"
+    fi
+    ;;
+
+  "disable-caching") # Disable caching
+    # Handle "disable" as a command without arguments
+    if [[ "$query" == "disable" || -z "$query" ]]; then
+      disable_caching
+    else
+      show_error "Invalid Command" "Expected 'disable' but got '$query'"
+    fi
     ;;
 
   "check-update") # Check for updates

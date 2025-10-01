@@ -86,11 +86,37 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8731E28A-9BEC-4345-9BBA-4C2A9176F70D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A50CF4B8-AEB0-4F04-AFFF-6FB7DF443457</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>9788455E-A15B-42AC-BCAF-B8AB83F58E1A</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>341C005C-0561-4A8A-97EA-2921BA85C8CE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>E1F0C0AE-D735-41CC-AB73-C163279D78E4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EBD9153F-8B53-4C42-84C6-BDF17D094B03</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -364,7 +390,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>.c</string>
+				<string>.cc</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -519,6 +545,50 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./bin/main.sh "enable" enable-caching</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>EBD9153F-8B53-4C42-84C6-BDF17D094B03</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>.ce</string>
+				<key>subtext</key>
+				<string>Turn caching ON if query performance is slow</string>
+				<key>text</key>
+				<string>Enable OmniFocus Cache</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>E1F0C0AE-D735-41CC-AB73-C163279D78E4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -564,6 +634,50 @@
 			<string>8E4B8B89-9584-4654-95D8-60A117F4CCA2</string>
 			<key>version</key>
 			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./bin/main.sh "disable" disable-caching</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A50CF4B8-AEB0-4F04-AFFF-6FB7DF443457</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>.cd</string>
+				<key>subtext</key>
+				<string>Turn caching OFF if queries are out of date</string>
+				<key>text</key>
+				<string>Disable OmniFocus Cache</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>8731E28A-9BEC-4345-9BBA-4C2A9176F70D</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -630,7 +744,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>.cc</string>
+				<string>.cx</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -1307,6 +1421,13 @@ Use `.h` for more details on this workflow and the cache.</string>
 			<key>ypos</key>
 			<real>940</real>
 		</dict>
+		<key>8731E28A-9BEC-4345-9BBA-4C2A9176F70D</key>
+		<dict>
+			<key>xpos</key>
+			<real>990</real>
+			<key>ypos</key>
+			<real>660</real>
+		</dict>
 		<key>8839BC2C-0DB1-44B5-8566-02E59FBBDC2D</key>
 		<dict>
 			<key>xpos</key>
@@ -1335,6 +1456,13 @@ Use `.h` for more details on this workflow and the cache.</string>
 			<key>ypos</key>
 			<real>1805</real>
 		</dict>
+		<key>A50CF4B8-AEB0-4F04-AFFF-6FB7DF443457</key>
+		<dict>
+			<key>xpos</key>
+			<real>1240</real>
+			<key>ypos</key>
+			<real>660</real>
+		</dict>
 		<key>B5A0241B-8241-4016-9C8B-4355E68CEABD</key>
 		<dict>
 			<key>xpos</key>
@@ -1348,6 +1476,20 @@ Use `.h` for more details on this workflow and the cache.</string>
 			<real>990</real>
 			<key>ypos</key>
 			<real>255</real>
+		</dict>
+		<key>E1F0C0AE-D735-41CC-AB73-C163279D78E4</key>
+		<dict>
+			<key>xpos</key>
+			<real>985</real>
+			<key>ypos</key>
+			<real>530</real>
+		</dict>
+		<key>EBD9153F-8B53-4C42-84C6-BDF17D094B03</key>
+		<dict>
+			<key>xpos</key>
+			<real>1230</real>
+			<key>ypos</key>
+			<real>525</real>
 		</dict>
 		<key>F11E5CB2-3B03-42FE-B0F1-5D974AF592A4</key>
 		<dict>
@@ -1423,7 +1565,7 @@ Use `.h` for more details on this workflow and the cache.</string>
 	<key>userconfigurationconfig</key>
 	<array/>
 	<key>version</key>
-	<string>2.1.1</string>
+	<string>2.2.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/rhydlewis/omnifocus-search</string>
 </dict>

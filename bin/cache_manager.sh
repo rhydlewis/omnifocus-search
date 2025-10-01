@@ -7,6 +7,7 @@ WORKFLOW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
 # Source the utility scripts if needed
 [ -f "${WORKFLOW_DIR}/bin/format_xml.sh" ] && source "${WORKFLOW_DIR}/bin/format_xml.sh"
+[ -f "${WORKFLOW_DIR}/bin/config.sh" ] && source "${WORKFLOW_DIR}/bin/config.sh"
 
 # Get the home directory explicitly
 HOME_DIR=$(eval echo ~$USER)
@@ -79,6 +80,14 @@ get_cache() {
   local query="$2"
   local additional_params="$3"  # For flags like completed/flagged
 
+  # Check if caching is enabled
+  local caching_enabled=$(is_caching_enabled)
+  if [[ "$caching_enabled" != "true" ]]; then
+    # Caching is disabled, immediately return with failure to trigger a fresh fetch
+    # Don't even create log files when caching is disabled
+    return 1
+  fi
+
   # Create cache key from query and params
   local cache_key="${query}_${additional_params}"
   if [[ -z "$query" ]]; then
@@ -134,6 +143,7 @@ get_cache() {
   echo "Entity: $entity_type" >> "${CACHE_DIR}/last_lookup.log"
   echo "Query: $query" >> "${CACHE_DIR}/last_lookup.log"
   echo "Params: $additional_params" >> "${CACHE_DIR}/last_lookup.log"
+  echo "Caching enabled: $caching_enabled" >> "${CACHE_DIR}/last_lookup.log"
   echo "File exists: $(test -f "$cache_file" && echo Yes || echo No)" >> "${CACHE_DIR}/last_lookup.log"
 
   # Check if cache is valid
@@ -168,6 +178,32 @@ save_cache() {
   local query="$2"
   local additional_params="$3"
   local results="$4"
+
+  # Create settings directory if it doesn't exist
+  local settings_dir="${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings"
+  mkdir -p "$settings_dir" 2>/dev/null
+
+  # Debug log for every cache save attempt
+  echo "SAVE_CACHE called at $(date)" > "${settings_dir}/save_cache_debug.log"
+  echo "Entity type: $entity_type" >> "${settings_dir}/save_cache_debug.log"
+  echo "Query: $query" >> "${settings_dir}/save_cache_debug.log"
+
+  # Check if caching is enabled by reading the file directly for maximum reliability
+  local caching_enabled="true"
+  if [ -f "${settings_dir}/OF_CACHING_ENABLED" ]; then
+    caching_enabled=$(cat "${settings_dir}/OF_CACHING_ENABLED")
+    echo "Caching status from file: $caching_enabled" >> "${settings_dir}/save_cache_debug.log"
+  else
+    echo "Caching status file not found, using default: $caching_enabled" >> "${settings_dir}/save_cache_debug.log"
+  fi
+
+  if [[ "$caching_enabled" != "true" ]]; then
+    # Caching is disabled, don't save to cache and don't create logs
+    echo "Caching is disabled - skipping save" >> "${settings_dir}/save_cache_debug.log"
+    return 0
+  fi
+
+  echo "Caching is enabled - saving to cache" >> "${settings_dir}/save_cache_debug.log"
 
   # Create cache key from query and params
   local cache_key="${query}_${additional_params}"
@@ -218,6 +254,7 @@ save_cache() {
   echo "Entity: $entity_type" >> "${CACHE_DIR}/last_save.log"
   echo "Query: $query" >> "${CACHE_DIR}/last_save.log"
   echo "Params: $additional_params" >> "${CACHE_DIR}/last_save.log"
+  echo "Caching enabled: $caching_enabled" >> "${CACHE_DIR}/last_save.log"
 
   # Create a small marker file to track
   touch "${CACHE_DIR}/last_save.tmp"
@@ -283,17 +320,27 @@ clear_entity_cache() {
 log_cache_hit() {
   local entity_type="$1"
   local query="$2"
-  echo "$(date '+%Y-%m-%d %H:%M:%S') HIT $entity_type $query" >> "${CACHE_DIR}/cache_stats.log"
-  # Debug line to check if hit is registered
-  touch "${CACHE_DIR}/last_hit.tmp"
+
+  # Only log if caching is enabled
+  local caching_enabled=$(is_caching_enabled)
+  if [[ "$caching_enabled" == "true" ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') HIT $entity_type $query" >> "${CACHE_DIR}/cache_stats.log"
+    # Debug line to check if hit is registered
+    touch "${CACHE_DIR}/last_hit.tmp"
+  fi
 }
 
 log_cache_miss() {
   local entity_type="$1"
   local query="$2"
-  echo "$(date '+%Y-%m-%d %H:%M:%S') MISS $entity_type $query" >> "${CACHE_DIR}/cache_stats.log"
-  # Debug line to check if miss is registered
-  touch "${CACHE_DIR}/last_miss.tmp"
+
+  # Only log if caching is enabled
+  local caching_enabled=$(is_caching_enabled)
+  if [[ "$caching_enabled" == "true" ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') MISS $entity_type $query" >> "${CACHE_DIR}/cache_stats.log"
+    # Debug line to check if miss is registered
+    touch "${CACHE_DIR}/last_miss.tmp"
+  fi
 }
 
 # Display cache statistics

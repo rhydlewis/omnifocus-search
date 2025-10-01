@@ -5,9 +5,30 @@
 # Get the workflow directory
 WORKFLOW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
+# Source config.sh to get access to caching functions
+[ -f "${WORKFLOW_DIR}/bin/config.sh" ] && source "${WORKFLOW_DIR}/bin/config.sh"
+
+# Get current caching status
+caching_status=$(is_caching_enabled)
+
 # Generate XML for Alfred
 echo '<?xml version="1.0" encoding="UTF-8"?>'
 echo '<items>'
+
+# Add status indicator at the top of the list
+if [[ "$caching_status" == "true" ]]; then
+  echo '  <item uid="status" valid="false">'
+  echo '    <title>Caching Status: ENABLED</title>'
+  echo '    <subtitle>OmniFocus search results are being cached</subtitle>'
+  echo '    <icon>icons/success.png</icon>'
+  echo '  </item>'
+else
+  echo '  <item uid="status" valid="false">'
+  echo '    <title>Caching Status: DISABLED</title>'
+  echo '    <subtitle>OmniFocus search always returns fresh results (may be slower)</subtitle>'
+  echo '    <icon>icons/error.png</icon>'
+  echo '  </item>'
+fi
 
 # Filter based on query
 query="$1"
@@ -23,6 +44,8 @@ cmd_projects="Rebuild Projects Cache|Rebuild only the projects cache|icons/proje
 cmd_tags="Rebuild Tags Cache|Rebuild only the tags cache|icons/tag.png"
 cmd_folders="Rebuild Folders Cache|Rebuild only the folders cache|icons/folder.png"
 cmd_perspectives="Rebuild Perspectives Cache|Rebuild only the perspectives cache|icons/perspective.png"
+
+# Remove enable/disable commands as they're now handled by separate keywords
 
 # Function to check if command matches the query
 matches_query() {
