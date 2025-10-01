@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OmniFocus Search Help</title>
+    <style>
+      :root {
+        /* Light mode colors - OmniFocus inspired */
+        --bg-color: #f5f5f5;
+        --text-color: #333333;
+        --header-bg: #e9e9e9;
+        --accent-color: #3c6eb4;
+        --section-bg: #ffffff;
+        --border-color: #d1d1d1;
+        --code-bg: #f0f0f0;
+        --link-color: #3c6eb4;
+        --hover-color: #264a78;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          /* Dark mode colors - OmniFocus inspired */
+          --bg-color: #1e1e1e;
+          --text-color: #e0e0e0;
+          --header-bg: #282828;
+          --accent-color: #5889d4;
+          --section-bg: #2a2a2a;
+          --border-color: #444444;
+          --code-bg: #333333;
+          --link-color: #5889d4;
+          --hover-color: #7ba3e0;
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      header {
+        background-color: var(--header-bg);
+        padding: 20px;
+        border-radius: 8px 8px 0 0;
+        border: 1px solid var(--border-color);
+        border-bottom: none;
+      }
+
+      h1 {
+        color: var(--accent-color);
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        color: var(--accent-color);
+        font-size: 20px;
+        margin: 25px 0 15px 0;
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 20px 0 10px 0;
+        color: var(--accent-color);
+      }
+
+      main {
+        background-color: var(--section-bg);
+        padding: 20px;
+        border-radius: 0 0 8px 8px;
+        border: 1px solid var(--border-color);
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .section {
+        margin-bottom: 25px;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      ul {
+        margin-left: 20px;
+        margin-bottom: 15px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      code {
+        font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+        background-color: var(--code-bg);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
+
+      .command {
+        background-color: var(--code-bg);
+        padding: 8px 12px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+        display: inline-block;
+        border: 1px solid var(--border-color);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--border-color);
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: var(--header-bg);
+      }
+
+      tr:nth-child(even) {
+        background-color: var(--bg-color);
+      }
+
+      .note {
+        background-color: var(--bg-color);
+        border-left: 4px solid var(--accent-color);
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+      }
+
+      .note strong {
+        color: var(--accent-color);
+      }
+
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: var(--hover-color);
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header style="position: relative">
+      <div style="max-width: 70%">
+        <h1>OmniFocus Search</h1>
+        <p>
+          A comprehensive Alfred workflow for searching and navigating OmniFocus
+        </p>
+      </div>
+      <div
+        style="
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translateY(-50%);
+        "
+      >
+        <a
+          href="https://buymeacoffee.com/rhyd"
+          target="_blank"
+          style="
+            display: inline-block;
+            background-color: #ffdd00;
+            color: #000000;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+          "
+        >
+          ☕ Buy me a coffee
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <h2>How to Use the Workflow</h2>
+        <p>
+          OmniFocus Search provides quick access to your OmniFocus data using
+          Alfred. Here are the available commands:
+        </p>
+
+        <h3>Search Commands</h3>
+        <ul>
+          <li><code class="command">.s [query]</code> - Search active tasks</li>
+          <li>
+            <code class="command">.sc [query]</code> - Search completed tasks
+          </li>
+          <li><code class="command">.p [query]</code> - Search projects</li>
+          <li><code class="command">.lp</code> - List all projects</li>
+          <li><code class="command">.i [query]</code> - Search inbox items</li>
+          <li><code class="command">.li</code> - List all inbox items</li>
+          <li><code class="command">.t [query]</code> - Search tags</li>
+          <li><code class="command">.lt</code> - List all tags</li>
+          <li><code class="command">.f [query]</code> - Search folders</li>
+          <li><code class="command">.lf</code> - List all folders</li>
+          <li><code class="command">.v [query]</code> - Search perspectives</li>
+          <li><code class="command">.lv</code> - List all perspectives</li>
+          <li><code class="command">.n [query]</code> - Search task notes</li>
+        </ul>
+
+        <h3>Update Command</h3>
+        <ul>
+          <li>
+            <code class="command">.osu</code> - Check for updates to OmniFocus
+            Search
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Managing the Cache</h2>
+        <p>
+          OmniFocus Search uses a cache system to improve performance and reduce
+          the load on OmniFocus. The cache is stored in
+          <code
+            >~/Library/Caches/com.runningwithcrayons.Alfred/Workflow
+            Data/net.rhydlewis.alfred.omnifocussearch</code
+          >.
+        </p>
+
+        <h3>Cache Commands</h3>
+        <p>
+          Use <code class="command">.c</code> to access the cache management
+          menu. From there, you can:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Rebuild Cache</strong> - Rebuild the entire OmniFocus search
+            cache
+          </li>
+          <li>
+            <strong>Rebuild Tasks Cache</strong> - Rebuild only the tasks cache
+          </li>
+          <li>
+            <strong>Rebuild Completed Tasks Cache</strong> - Rebuild only the
+            completed tasks cache
+          </li>
+          <li>
+            <strong>Rebuild Projects Cache</strong> - Rebuild only the projects
+            cache
+          </li>
+          <li>
+            <strong>Rebuild Tags Cache</strong> - Rebuild only the tags cache
+          </li>
+          <li>
+            <strong>Rebuild Folders Cache</strong> - Rebuild only the folders
+            cache
+          </li>
+          <li>
+            <strong>Rebuild Perspectives Cache</strong> - Rebuild only the
+            perspectives cache
+          </li>
+        </ul>
+
+        <h3>Cache Statistics</h3>
+        <p>
+          Use <code class="command">.cs</code> to see cache usage statistics,
+          including hit rate and query counts.
+        </p>
+
+        <h3>When to Rebuild the Cache</h3>
+        <p>
+          You should consider rebuilding the cache in the following situations:
+        </p>
+        <ul>
+          <li>
+            After making significant changes in OmniFocus (adding many tasks,
+            completing many tasks, etc.)
+          </li>
+          <li>If search results don't match what you see in OmniFocus</li>
+          <li>After updating tags, perspectives, or projects</li>
+          <li>If you notice that the workflow is returning outdated results</li>
+        </ul>
+
+        <h3>Cache Lifetimes</h3>
+        <p>Different types of data are cached for different periods:</p>
+
+        <table>
+          <tr>
+            <th>Data Type</th>
+            <th>Cache Duration</th>
+          </tr>
+          <tr>
+            <td>Projects</td>
+            <td>24 hours</td>
+          </tr>
+          <tr>
+            <td>Folders</td>
+            <td>24 hours</td>
+          </tr>
+          <tr>
+            <td>Tags</td>
+            <td>24 hours</td>
+          </tr>
+          <tr>
+            <td>Perspectives</td>
+            <td>24 hours</td>
+          </tr>
+          <tr>
+            <td>Active Tasks</td>
+            <td>30 minutes</td>
+          </tr>
+          <tr>
+            <td>Completed Tasks</td>
+            <td>6 hours</td>
+          </tr>
+          <tr>
+            <td>Inbox</td>
+            <td>15 minutes</td>
+          </tr>
+          <tr>
+            <td>Notes</td>
+            <td>1 hour</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          <strong>Performance Tip:</strong> If you have a large OmniFocus
+          database, rebuilding the entire cache can take some time. Consider
+          rebuilding only the specific cache that needs refreshing.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Troubleshooting</h2>
+        <h3>Common Issues</h3>
+        <ul>
+          <li>
+            <strong>Results not updating:</strong> Rebuild the cache for the
+            specific type of data
+          </li>
+          <li>
+            <strong>Slow performance:</strong> Check if OmniFocus is open and
+            running, as the workflow performs better when OmniFocus is already
+            running
+          </li>
+          <li>
+            <strong>Missing items:</strong> Make sure your OmniFocus database is
+            properly set up and the workflow has access to it
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Feedback and Support</h2>
+        <p>
+          If you encounter a problem, want to request a feature you can raise a
+          request at the workflow GitHub repository.
+        </p>
+        <p>
+          <a
+            href="https://github.com/rhydlewis/omnifocus-search/issues"
+            target="_blank"
+          >
+            <strong>Report an issue</strong>
+          </a>
+          - Use GitHub Issues to report bugs or suggest improvements
+        </p>
+        <div class="note">
+          <strong>When reporting issues:</strong> Please include as much detail
+          as possible, such as your macOS version, OmniFocus version, and steps
+          to reproduce the problem.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Support the Developer</h2>
+        <p>
+          If you find this workflow useful and would like to show your
+          appreciation, you can buy me a coffee. Cheers!
+        </p>
+        <p style="text-align: center; margin: 20px 0">
+          <a
+            href="https://buymeacoffee.com/rhyd"
+            target="_blank"
+            style="
+              display: inline-block;
+              background-color: #ffdd00;
+              color: #000000;
+              padding: 10px 20px;
+              border-radius: 5px;
+              font-weight: bold;
+              text-decoration: none;
+              font-size: 16px;
+            "
+          >
+            ☕ Buy me a coffee
+          </a>
+        </p>
+        <p
+          style="
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+          "
+        >
+          Your support helps maintain and improve this workflow. Thank you!
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

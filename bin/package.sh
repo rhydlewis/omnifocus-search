@@ -30,6 +30,7 @@ zip -r "$OUTPUT_FILE" \
     bin/update_installer.sh \
     icons/*.png \
     lib/constants.sh \
+    help.html \
     icon.png \
     info.plist \
     README.md

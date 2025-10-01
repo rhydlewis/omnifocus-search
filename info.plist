@@ -60,6 +60,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>6E832BD7-8439-4B30-87B7-34848406EF39</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>90BF1D5F-E839-451F-B09B-48BEEED45BB9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8149A1E9-EE2D-4524-86E4-103E160413B4</key>
 		<array>
 			<dict>
@@ -234,9 +247,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -283,9 +296,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -404,9 +417,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -430,6 +443,55 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>p-script</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>.lp</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching projects...</string>
+				<key>script</key>
+				<string>./bin/main.sh "" p</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>List projects in OmniFocus</string>
+				<key>title</key>
+				<string>List all OmniFocus Projects</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>F685C73A-5119-484E-A680-213F816B0986</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -515,55 +577,6 @@
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>.lp</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Fetching projects...</string>
-				<key>script</key>
-				<string>./bin/main.sh "" p</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>List projects in OmniFocus</string>
-				<key>title</key>
-				<string>List all OmniFocus Projects</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>F685C73A-5119-484E-A680-213F816B0986</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
 				<integer>102</integer>
@@ -572,9 +585,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -670,9 +683,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -745,125 +758,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>8149A1E9-EE2D-4524-86E4-103E160413B4</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>.f</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching folders...</string>
-				<key>script</key>
-				<string>./bin/main.sh "{query}" f</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search folders in OmniFocus</string>
-				<key>title</key>
-				<string>Search OmniFocus Folders</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>f-script</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>skipqueryencode</key>
-				<false/>
-				<key>skipvarencode</key>
-				<false/>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>omnifocus:///folder/{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>B5A0241B-8241-4016-9C8B-4355E68CEABD</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>.lf</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Fetching folders...</string>
-				<key>script</key>
-				<string>./bin/main.sh "" f</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>List folders in OmniFocus</string>
-				<key>title</key>
-				<string>List OmniFocus Folders</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>2B7E8681-37B5-448D-8DDD-5D06C0AAACD5</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -955,7 +849,113 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>.t</string>
+				<string>.f</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching folders...</string>
+				<key>script</key>
+				<string>./bin/main.sh "{query}" f</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search folders in OmniFocus</string>
+				<key>title</key>
+				<string>Search OmniFocus Folders</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>f-script</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>omnifocus:///folder/{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>B5A0241B-8241-4016-9C8B-4355E68CEABD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string>help.html</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>90BF1D5F-E839-451F-B09B-48BEEED45BB9</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>.h</string>
+				<key>subtext</key>
+				<string>View help for the OmniFocus Search workflow</string>
+				<key>text</key>
+				<string>OmniFocus Search Help</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>6E832BD7-8439-4B30-87B7-34848406EF39</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>.lf</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -965,7 +965,56 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Searching tags...</string>
+				<string>Fetching folders...</string>
+				<key>script</key>
+				<string>./bin/main.sh "" f</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>List folders in OmniFocus</string>
+				<key>title</key>
+				<string>List OmniFocus Folders</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>2B7E8681-37B5-448D-8DDD-5D06C0AAACD5</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>.t</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Search tags in OmniFocus</string>
 				<key>script</key>
 				<string>./bin/main.sh "{query}" t</string>
 				<key>scriptargtype</key>
@@ -973,7 +1022,7 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search tags in OmniFocus</string>
+				<string>Rebuild the cache using .c if you've updated tags recently</string>
 				<key>title</key>
 				<string>Search OmniFocus Tags</string>
 				<key>type</key>
@@ -1099,9 +1148,9 @@
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
@@ -1192,9 +1241,7 @@ This workflow allows you to quickly search OmniFocus data:
 - `.v [query]` - Search perspectives
 - `.n [query]` - Search task notes
 
-Configuration:
-- `.find-of-db` - Find OmniFocus database automatically
-- `.set-of-db [path]` - Set database path manually</string>
+Use `.h` for more details on this workflow and the cache.</string>
 	<key>uidata</key>
 	<dict>
 		<key>1263DF33-54C7-4A78-8A2A-EAFC9BA3C8E4</key>
@@ -1214,9 +1261,9 @@ Configuration:
 		<key>328162E7-9D92-4AB3-82AA-17D9A09C9913</key>
 		<dict>
 			<key>xpos</key>
-			<real>685</real>
+			<real>740</real>
 			<key>ypos</key>
-			<real>1265</real>
+			<real>975</real>
 		</dict>
 		<key>341C005C-0561-4A8A-97EA-2921BA85C8CE</key>
 		<dict>
@@ -1238,6 +1285,13 @@ Configuration:
 			<real>95</real>
 			<key>ypos</key>
 			<real>1495</real>
+		</dict>
+		<key>6E832BD7-8439-4B30-87B7-34848406EF39</key>
+		<dict>
+			<key>xpos</key>
+			<real>1375</real>
+			<key>ypos</key>
+			<real>1160</real>
 		</dict>
 		<key>80470FFB-F099-44DE-968C-C5F9E9FFD7F7</key>
 		<dict>
@@ -1267,6 +1321,13 @@ Configuration:
 			<key>ypos</key>
 			<real>545</real>
 		</dict>
+		<key>90BF1D5F-E839-451F-B09B-48BEEED45BB9</key>
+		<dict>
+			<key>xpos</key>
+			<real>1655</real>
+			<key>ypos</key>
+			<real>1150</real>
+		</dict>
 		<key>9788455E-A15B-42AC-BCAF-B8AB83F58E1A</key>
 		<dict>
 			<key>xpos</key>
@@ -1291,16 +1352,16 @@ Configuration:
 		<key>F11E5CB2-3B03-42FE-B0F1-5D974AF592A4</key>
 		<dict>
 			<key>xpos</key>
-			<real>945</real>
+			<real>1000</real>
 			<key>ypos</key>
-			<real>1265</real>
+			<real>975</real>
 		</dict>
 		<key>F685C73A-5119-484E-A680-213F816B0986</key>
 		<dict>
 			<key>xpos</key>
 			<real>95</real>
 			<key>ypos</key>
-			<real>585</real>
+			<real>445</real>
 		</dict>
 		<key>f-script</key>
 		<dict>
@@ -1361,10 +1422,8 @@ Configuration:
 	</dict>
 	<key>userconfigurationconfig</key>
 	<array/>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
-	<string>2.1.0</string>
+	<string>2.1.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/rhydlewis/omnifocus-search</string>
 </dict>

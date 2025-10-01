@@ -12,6 +12,10 @@ WORKFLOW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 
 # Parse the input arguments
 query="$1"
+# Handle case where Alfred passes "(null)" as a literal string
+if [[ "$query" == "(null)" ]]; then
+  query=""
+fi
 command_type="$2"
 
 # Process commands
