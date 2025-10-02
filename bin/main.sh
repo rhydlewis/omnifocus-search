@@ -10,6 +10,51 @@ WORKFLOW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 [ -f "${WORKFLOW_DIR}/lib/constants.sh" ] && source "${WORKFLOW_DIR}/lib/constants.sh"
 [ -f "${WORKFLOW_DIR}/bin/cache_manager.sh" ] && source "${WORKFLOW_DIR}/bin/cache_manager.sh"
 
+# Log rotation function
+rotate_logs_if_needed() {
+  local settings_dir="$1"
+  local rotation_days=7
+  local rotation_marker="${settings_dir}/.log_rotation_marker"
+
+  # Check if we've already rotated today (avoid checking repeatedly)
+  if [ -f "$rotation_marker" ]; then
+    local marker_age=$(( $(date +%s) - $(stat -f %m "$rotation_marker" 2>/dev/null || echo 0) ))
+    # If marker is less than 24 hours old, skip rotation check
+    if [ "$marker_age" -lt 86400 ]; then
+      return 0
+    fi
+  fi
+
+  # Check and rotate execute_debug.log if needed
+  local debug_log="${settings_dir}/execute_debug.log"
+  if [ -f "$debug_log" ]; then
+    local log_age=$(( $(date +%s) - $(stat -f %m "$debug_log" 2>/dev/null || echo 0) ))
+    local max_age=$((rotation_days * 86400))
+
+    if [ "$log_age" -gt "$max_age" ]; then
+      echo "=== Log rotated on $(date) ===" > "$debug_log"
+      echo "Previous log was older than $rotation_days days" >> "$debug_log"
+      echo "" >> "$debug_log"
+    fi
+  fi
+
+  # Check and rotate performance.log if needed
+  local perf_log="${settings_dir}/performance.log"
+  if [ -f "$perf_log" ]; then
+    local log_age=$(( $(date +%s) - $(stat -f %m "$perf_log" 2>/dev/null || echo 0) ))
+    local max_age=$((rotation_days * 86400))
+
+    if [ "$log_age" -gt "$max_age" ]; then
+      echo "=== Log rotated on $(date) ===" > "$perf_log"
+      echo "Previous log was older than $rotation_days days" >> "$perf_log"
+      echo "" >> "$perf_log"
+    fi
+  fi
+
+  # Update rotation marker
+  touch "$rotation_marker" 2>/dev/null
+}
+
 # Parse the input arguments
 query="$1"
 # Handle case where Alfred passes "(null)" as a literal string
@@ -28,6 +73,9 @@ execute_and_cache() {
   # Create settings directory if it doesn't exist
   local settings_dir="${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings"
   mkdir -p "$settings_dir" 2>/dev/null
+
+  # Rotate logs if needed (once per day check)
+  rotate_logs_if_needed "$settings_dir"
 
   # Debug log
   echo "[$entity_type] execute_and_cache called at $(date)" > "${settings_dir}/execute_debug.log"
