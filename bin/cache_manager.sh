@@ -387,12 +387,12 @@ rebuild_cache() {
     echo "Rebuilding tasks cache..."
 
     # Active tasks (no query - all active tasks)
-    local results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "" "false" "false" "true")
+    local results=$(/usr/bin/osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_tasks.js" "" "false" "false" "true")
     local xml_output=$(generate_xml_output "task" "$results")
     save_cache "task" "" "completed:false_flagged:false_active:true" "$xml_output"
 
     # Flagged tasks
-    results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "" "false" "true" "true")
+    results=$(/usr/bin/osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_tasks.js" "" "false" "true" "true")
     xml_output=$(generate_xml_output "task" "$results")
     save_cache "task" "" "completed:false_flagged:true_active:true" "$xml_output"
   fi
@@ -400,7 +400,7 @@ rebuild_cache() {
   if [[ -z "$query" || "$query" == "completed" || "$query" == "completed_tasks" ]]; then
     # Warm up completed tasks cache (recent ones)
     echo "Rebuilding completed tasks cache..."
-    local results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "" "true" "false" "false")
+    local results=$(/usr/bin/osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_tasks.js" "" "true" "false" "false")
     local xml_output=$(generate_xml_output "task" "$results")
     save_cache "task" "" "completed:true_flagged:false_active:false" "$xml_output"
   fi
@@ -416,7 +416,7 @@ rebuild_cache() {
   if [[ -z "$query" || "$query" == "tag" || "$query" == "tags" ]]; then
     # Warm up tags cache
     echo "Rebuilding tags cache..."
-    local results=$(/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tags.applescript" "")
+    local results=$(/usr/bin/osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_tags.js" "")
     local xml_output=$(generate_xml_output "tag" "$results")
     save_cache "tag" "" "" "$xml_output"
   fi

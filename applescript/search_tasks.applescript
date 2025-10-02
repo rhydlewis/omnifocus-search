@@ -86,7 +86,7 @@ on run argv
 					end if
 				end if
 
-				-- Process results
+				-- Process results, filtering out items that are actually projects
 				set resultList to {}
 
 				-- Limit results to 100 items to prevent excessive processing
@@ -94,44 +94,62 @@ on run argv
 				set counter to 0
 
 				repeat with t in matchingTasks
-					set counter to counter + 1
-					if counter > maxResults then exit repeat
-
 					set taskId to id of t as string
-					set taskName to name of t
 
-					-- Get project name
-					set projectName to "Unknown"
+					-- Filter out projects: if task.id = containingProject.id, this is a project, not a task
+					set isProject to false
 					try
 						set proj to containing project of t
 						if proj is not missing value then
-							set projectName to name of proj
-						else
+							set projId to id of proj as string
+							if taskId is equal to projId then
+								set isProject to true
+							end if
+						end if
+					end try
+
+					-- Skip projects
+					if isProject then
+						-- Continue to next iteration
+					else
+						set counter to counter + 1
+						if counter > maxResults then exit repeat
+
+							set taskName to name of t
+
+						-- Get project name
+						set projectName to "Unknown"
+						try
+							set proj to containing project of t
+							if proj is not missing value then
+								set projectName to name of proj
+							else
+								if t is in inbox then
+									set projectName to "Inbox"
+								else
+									set projectName to "(No Project)"
+								end if
+							end if
+						on error
 							if t is in inbox then
 								set projectName to "Inbox"
 							else
 								set projectName to "(No Project)"
 							end if
-						end if
-					on error
-						if t is in inbox then
-							set projectName to "Inbox"
-						else
-							set projectName to "(No Project)"
-						end if
-					end try
+						end try
 
-					-- Determine status
-					set taskStatus to "active"
-					if completed of t then
-						set taskStatus to "completed"
-					else if flagged of t then
-						set taskStatus to "flagged"
+						-- Determine status
+						set taskStatus to "active"
+						if completed of t then
+							set taskStatus to "completed"
+						else if flagged of t then
+							set taskStatus to "flagged"
+						end if
+
+						-- Format as: id|name|project|status
+						set taskString to taskId & "|" & taskName & "|" & projectName & "|" & taskStatus
+						set end of resultList to taskString
 					end if
-
-					-- Format as: id|name|project|status
-					set taskString to taskId & "|" & taskName & "|" & projectName & "|" & taskStatus
-					set end of resultList to taskString
 				end repeat
 
 				-- Join results with record separator and return

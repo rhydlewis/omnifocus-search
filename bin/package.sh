@@ -18,6 +18,7 @@ chmod +x bin/*.sh
 echo "Creating Alfred workflow package..."
 zip -r "$OUTPUT_FILE" \
     applescript/*.applescript \
+    applescript/*.js \
     bin/config.sh \
     bin/error_handler.sh \
     bin/format_xml.sh \
@@ -28,6 +29,7 @@ zip -r "$OUTPUT_FILE" \
     bin/update_installer.sh \
     icons/*.png \
     lib/constants.sh \
+    lib/omnifocus_jxa_common.js \
     help.html \
     icon.png \
     info.plist \

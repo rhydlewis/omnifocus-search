@@ -18,7 +18,7 @@ if [[ "$query" == "(null)" ]]; then
 fi
 command_type="$2"
 
-# Define the function to execute the AppleScript and format output
+# Define the function to execute scripts (AppleScript or JXA) and format output
 execute_and_cache() {
   local entity_type="$1"
   local script_path="$2"
@@ -51,13 +51,44 @@ execute_and_cache() {
       echo "$cached_results"
       return
     fi
-    echo "Cache miss - executing AppleScript" >> "${settings_dir}/execute_debug.log"
+    echo "Cache miss - executing script" >> "${settings_dir}/execute_debug.log"
   else
-    echo "Caching disabled - executing AppleScript directly" >> "${settings_dir}/execute_debug.log"
+    echo "Caching disabled - executing script directly" >> "${settings_dir}/execute_debug.log"
   fi
 
-  # Execute the AppleScript
-  results=$(/usr/bin/osascript "$script_path" "$query" "${@:5}")
+  # Detect script type and execute accordingly
+  local script_type="applescript"
+  if [[ "$script_path" == *.js ]]; then
+    script_type="jxa"
+    echo "Detected JXA script" >> "${settings_dir}/execute_debug.log"
+  fi
+
+  # Execute the script with timeout
+  local timeout_duration=30
+  if [[ "$script_type" == "jxa" ]]; then
+    # Execute JXA script with timeout
+    results=$(timeout "$timeout_duration" /usr/bin/osascript -l JavaScript "$script_path" "$query" "${@:5}" 2>&1)
+    local exit_code=$?
+    if [[ $exit_code -eq 124 ]]; then
+      echo "Script execution timed out after ${timeout_duration}s" >> "${settings_dir}/execute_debug.log"
+      results="ERROR: Script execution timed out"
+    elif [[ $exit_code -ne 0 ]]; then
+      echo "Script execution failed with exit code $exit_code" >> "${settings_dir}/execute_debug.log"
+      echo "Error output: $results" >> "${settings_dir}/execute_debug.log"
+    fi
+  else
+    # Execute AppleScript with timeout
+    results=$(timeout "$timeout_duration" /usr/bin/osascript "$script_path" "$query" "${@:5}" 2>&1)
+    local exit_code=$?
+    if [[ $exit_code -eq 124 ]]; then
+      echo "Script execution timed out after ${timeout_duration}s" >> "${settings_dir}/execute_debug.log"
+      results="ERROR: Script execution timed out"
+    elif [[ $exit_code -ne 0 ]]; then
+      echo "Script execution failed with exit code $exit_code" >> "${settings_dir}/execute_debug.log"
+      echo "Error output: $results" >> "${settings_dir}/execute_debug.log"
+    fi
+  fi
+
   xml_output=$(generate_xml_output "$entity_type" "$results")
 
   # Save to cache if enabled
@@ -79,7 +110,7 @@ case "$command_type" in
     active_only="true"
     additional_params="completed:${completed}_flagged:${flagged}_active:${active_only}"
 
-    execute_and_cache "task" "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "$query" "$additional_params" "$completed" "$flagged" "$active_only"
+    execute_and_cache "task" "${WORKFLOW_DIR}/applescript/search_tasks.js" "$query" "$additional_params" "$completed" "$flagged" "$active_only"
     ;;
 
   "sc") # Search completed tasks
@@ -88,7 +119,7 @@ case "$command_type" in
     active_only="false"
     additional_params="completed:${completed}_flagged:${flagged}_active:${active_only}"
 
-    execute_and_cache "task" "${WORKFLOW_DIR}/applescript/search_tasks.applescript" "$query" "$additional_params" "$completed" "$flagged" "$active_only"
+    execute_and_cache "task" "${WORKFLOW_DIR}/applescript/search_tasks.js" "$query" "$additional_params" "$completed" "$flagged" "$active_only"
     ;;
 
   "p") # Search projects
@@ -103,7 +134,7 @@ case "$command_type" in
     ;;
 
   "t") # Search tags
-    execute_and_cache "tag" "${WORKFLOW_DIR}/applescript/search_tags.applescript" "$query" ""
+    execute_and_cache "tag" "${WORKFLOW_DIR}/applescript/search_tags.js" "$query" ""
     ;;
 
   "f") # Search folders
