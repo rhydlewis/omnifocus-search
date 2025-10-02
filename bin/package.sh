@@ -24,7 +24,6 @@ zip -r "$OUTPUT_FILE" \
     bin/main.sh \
     bin/cache_manager.sh \
     bin/cache_commands.sh \
-    bin/progress_handler.sh \
     bin/update_checker.sh \
     bin/update_installer.sh \
     icons/*.png \
