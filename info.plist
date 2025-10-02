@@ -1565,7 +1565,7 @@ Use `.h` for more details on this workflow and the cache.</string>
 	<key>userconfigurationconfig</key>
 	<array/>
 	<key>version</key>
-	<string>2.2.3</string>
+	<string>2.2.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/rhydlewis/omnifocus-search</string>
 </dict>

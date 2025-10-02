@@ -126,11 +126,11 @@ case "$command_type" in
     active_only="true"
     additional_params="active:${active_only}"
 
-    execute_and_cache "project" "${WORKFLOW_DIR}/applescript/search_projects.applescript" "$query" "$additional_params" "$active_only"
+    execute_and_cache "project" "${WORKFLOW_DIR}/applescript/search_projects.js" "$query" "$additional_params" "$active_only"
     ;;
 
   "i") # Search inbox
-    execute_and_cache "inbox" "${WORKFLOW_DIR}/applescript/search_inbox.applescript" "$query" ""
+    execute_and_cache "inbox" "${WORKFLOW_DIR}/applescript/search_inbox.js" "$query" ""
     ;;
 
   "t") # Search tags
@@ -138,15 +138,15 @@ case "$command_type" in
     ;;
 
   "f") # Search folders
-    execute_and_cache "folder" "${WORKFLOW_DIR}/applescript/search_folders.applescript" "$query" ""
+    execute_and_cache "folder" "${WORKFLOW_DIR}/applescript/search_folders.js" "$query" ""
     ;;
 
   "v") # List perspectives
-    execute_and_cache "perspective" "${WORKFLOW_DIR}/applescript/get_perspectives.applescript" "$query" ""
+    execute_and_cache "perspective" "${WORKFLOW_DIR}/applescript/get_perspectives.js" "$query" ""
     ;;
 
   "n") # Search notes
-    execute_and_cache "note" "${WORKFLOW_DIR}/applescript/search_notes.applescript" "$query" ""
+    execute_and_cache "note" "${WORKFLOW_DIR}/applescript/search_notes.js" "$query" ""
     ;;
 
   "find-of-db") # Find OmniFocus database
