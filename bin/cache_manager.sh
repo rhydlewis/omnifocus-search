@@ -42,7 +42,25 @@ COMPLETED_TASKS_CACHE_LIFE=21600 # 6 hours
 INBOX_CACHE_LIFE=900            # 15 minutes
 NOTES_CACHE_LIFE=3600           # 1 hour
 
-# Check if cache is valid
+# Get OmniFocus database modification time
+get_omnifocus_db_modtime() {
+  # Try to find OmniFocus database
+  local of_db="${HOME}/Library/Containers/com.omnigroup.OmniFocus3/Data/Library/Application Support/OmniFocus/OmniFocus.ofocus"
+
+  # If OmniFocus 3 database doesn't exist, try OmniFocus 4
+  if [[ ! -d "$of_db" ]]; then
+    of_db="${HOME}/Library/Containers/com.omnigroup.OmniFocus4/Data/Library/Application Support/OmniFocus/OmniFocus.ofocus"
+  fi
+
+  if [[ -d "$of_db" ]]; then
+    # Get the most recent modification time of any file in the database
+    find "$of_db" -type f -print0 | xargs -0 stat -f "%m" | sort -n | tail -1
+  else
+    echo "0"
+  fi
+}
+
+# Check if cache is valid (with OmniFocus database invalidation)
 is_cache_valid() {
   local cache_file="$1"
   local max_age="$2"
@@ -57,6 +75,14 @@ is_cache_valid() {
   local current_time=$(date +%s)
   local age=$((current_time - file_mod_time))
 
+  # Check if OmniFocus database has been modified since cache was created
+  local of_db_modtime=$(get_omnifocus_db_modtime)
+  local cache_invalidated_by_db=false
+
+  if [[ "$of_db_modtime" != "0" ]] && [[ $of_db_modtime -gt $file_mod_time ]]; then
+    cache_invalidated_by_db=true
+  fi
+
   # Log the validation results
   echo "Cache validation:" >> "${CACHE_DIR}/is_valid.log"
   echo "File: $cache_file" >> "${CACHE_DIR}/is_valid.log"
@@ -64,12 +90,19 @@ is_cache_valid() {
   echo "Current time: $current_time" >> "${CACHE_DIR}/is_valid.log"
   echo "Age: $age seconds" >> "${CACHE_DIR}/is_valid.log"
   echo "Max age: $max_age seconds" >> "${CACHE_DIR}/is_valid.log"
+  echo "OmniFocus DB mod time: $of_db_modtime" >> "${CACHE_DIR}/is_valid.log"
+  echo "Cache invalidated by DB: $cache_invalidated_by_db" >> "${CACHE_DIR}/is_valid.log"
 
-  if [[ $age -lt $max_age ]]; then
+  # Cache is invalid if it's too old OR if OmniFocus database was modified
+  if [[ $age -lt $max_age ]] && [[ "$cache_invalidated_by_db" == "false" ]]; then
     echo "Result: VALID" >> "${CACHE_DIR}/is_valid.log"
     return 0
   else
-    echo "Result: EXPIRED" >> "${CACHE_DIR}/is_valid.log"
+    if [[ "$cache_invalidated_by_db" == "true" ]]; then
+      echo "Result: EXPIRED (OmniFocus database was modified)" >> "${CACHE_DIR}/is_valid.log"
+    else
+      echo "Result: EXPIRED (age exceeded)" >> "${CACHE_DIR}/is_valid.log"
+    fi
     return 1
   fi
 }
@@ -172,7 +205,7 @@ get_cache() {
   fi
 }
 
-# Save results to cache
+# Save results to cache with metadata
 save_cache() {
   local entity_type="$1"
   local query="$2"
@@ -248,6 +281,16 @@ save_cache() {
   # Save results to cache file
   echo "$results" > "$cache_file"
 
+  # Save metadata for diagnostics
+  local metadata_file="${cache_file}.meta"
+  echo "entity_type=$entity_type" > "$metadata_file"
+  echo "query=$query" >> "$metadata_file"
+  echo "additional_params=$additional_params" >> "$metadata_file"
+  echo "cached_at=$(date +%s)" >> "$metadata_file"
+  echo "cached_at_readable=$(date)" >> "$metadata_file"
+  echo "script_type=JXA" >> "$metadata_file"
+  echo "result_count=$(echo "$results" | grep -c '<item' || echo 0)" >> "$metadata_file"
+
   # Debug info
   echo "Cache saved to: $cache_file" > "${CACHE_DIR}/last_save.log"
   echo "Time: $(date)" >> "${CACHE_DIR}/last_save.log"
@@ -255,6 +298,7 @@ save_cache() {
   echo "Query: $query" >> "${CACHE_DIR}/last_save.log"
   echo "Params: $additional_params" >> "${CACHE_DIR}/last_save.log"
   echo "Caching enabled: $caching_enabled" >> "${CACHE_DIR}/last_save.log"
+  echo "Metadata saved to: $metadata_file" >> "${CACHE_DIR}/last_save.log"
 
   # Create a small marker file to track
   touch "${CACHE_DIR}/last_save.tmp"

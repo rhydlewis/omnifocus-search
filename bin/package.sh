@@ -17,7 +17,6 @@ chmod +x bin/*.sh
 # Create the zip file
 echo "Creating Alfred workflow package..."
 zip -r "$OUTPUT_FILE" \
-    applescript/*.applescript \
     applescript/*.js \
     bin/config.sh \
     bin/error_handler.sh \
@@ -25,6 +24,7 @@ zip -r "$OUTPUT_FILE" \
     bin/main.sh \
     bin/cache_manager.sh \
     bin/cache_commands.sh \
+    bin/progress_handler.sh \
     bin/update_checker.sh \
     bin/update_installer.sh \
     icons/*.png \

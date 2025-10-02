@@ -63,29 +63,57 @@ execute_and_cache() {
     echo "Detected JXA script" >> "${settings_dir}/execute_debug.log"
   fi
 
-  # Execute the script with timeout
+  # Execute the script with timeout and performance monitoring
   local timeout_duration=30
+  local start_time=$(date +%s)
+
   if [[ "$script_type" == "jxa" ]]; then
     # Execute JXA script with timeout
     results=$(timeout "$timeout_duration" /usr/bin/osascript -l JavaScript "$script_path" "$query" "${@:5}" 2>&1)
     local exit_code=$?
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    echo "JXA script execution time: ${duration}s" >> "${settings_dir}/execute_debug.log"
+    echo "Script type: JXA" >> "${settings_dir}/performance.log"
+    echo "Script: $script_path" >> "${settings_dir}/performance.log"
+    echo "Duration: ${duration}s" >> "${settings_dir}/performance.log"
+    echo "Timestamp: $(date)" >> "${settings_dir}/performance.log"
+    echo "---" >> "${settings_dir}/performance.log"
+
     if [[ $exit_code -eq 124 ]]; then
       echo "Script execution timed out after ${timeout_duration}s" >> "${settings_dir}/execute_debug.log"
-      results="ERROR: Script execution timed out"
+      handle_jxa_error "Script execution timed out after ${timeout_duration} seconds"
+      return 1
     elif [[ $exit_code -ne 0 ]]; then
       echo "Script execution failed with exit code $exit_code" >> "${settings_dir}/execute_debug.log"
       echo "Error output: $results" >> "${settings_dir}/execute_debug.log"
+      handle_jxa_error "$results"
+      return 1
     fi
   else
     # Execute AppleScript with timeout
     results=$(timeout "$timeout_duration" /usr/bin/osascript "$script_path" "$query" "${@:5}" 2>&1)
     local exit_code=$?
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    echo "AppleScript execution time: ${duration}s" >> "${settings_dir}/execute_debug.log"
+    echo "Script type: AppleScript" >> "${settings_dir}/performance.log"
+    echo "Script: $script_path" >> "${settings_dir}/performance.log"
+    echo "Duration: ${duration}s" >> "${settings_dir}/performance.log"
+    echo "Timestamp: $(date)" >> "${settings_dir}/performance.log"
+    echo "---" >> "${settings_dir}/performance.log"
+
     if [[ $exit_code -eq 124 ]]; then
       echo "Script execution timed out after ${timeout_duration}s" >> "${settings_dir}/execute_debug.log"
-      results="ERROR: Script execution timed out"
+      handle_applescript_error "Script execution timed out after ${timeout_duration} seconds"
+      return 1
     elif [[ $exit_code -ne 0 ]]; then
       echo "Script execution failed with exit code $exit_code" >> "${settings_dir}/execute_debug.log"
       echo "Error output: $results" >> "${settings_dir}/execute_debug.log"
+      handle_applescript_error "$results"
+      return 1
     fi
   fi
 
