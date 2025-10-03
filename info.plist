@@ -73,19 +73,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>OL-KEYWORD-UID</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>OL-ACTION-UID</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>8149A1E9-EE2D-4524-86E4-103E160413B4</key>
 		<array>
 			<dict>
@@ -117,6 +104,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>80470FFB-F099-44DE-968C-C5F9E9FFD7F7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>OL-KEYWORD-UID</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>OL-ACTION-UID</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -934,21 +934,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>openwith</key>
-				<string></string>
-				<key>sourcefile</key>
-				<string>~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings/performance.log</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
-			<key>uid</key>
-			<string>OL-ACTION-UID</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
@@ -964,27 +949,6 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>6E832BD7-8439-4B30-87B7-34848406EF39</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>.ol</string>
-				<key>subtext</key>
-				<string>Open the performance log file</string>
-				<key>text</key>
-				<string>Open Performance Log</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>OL-KEYWORD-UID</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1036,6 +1000,42 @@
 			<string>2B7E8681-37B5-448D-8DDD-5D06C0AAACD5</string>
 			<key>version</key>
 			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string>~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings/performance.log</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>OL-ACTION-UID</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>.ol</string>
+				<key>subtext</key>
+				<string>Open the performance log file</string>
+				<key>text</key>
+				<string>Open Performance Log</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>OL-KEYWORD-UID</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1277,20 +1277,37 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>## Search OmniFocus
+	<string># OmniFocus Search
+*A comprehensive Alfred workflow for searching and navigating OmniFocus*
 
-This workflow allows you to quickly search OmniFocus data:
+## How to Use the Workflow
 
-- `.s [query]` - Search tasks
-- `.sc [query]` - Search completed tasks
-- `.p [query]` - Search projects
-- `.i [query]` - Search inbox items
-- `.t [query]` - Search tags
-- `.f [query]` - Search folders
-- `.v [query]` - Search perspectives
-- `.n [query]` - Search task notes
+Use keyword `.h` to open the full help guide.
 
-Use `.h` for more details on this workflow and the cache.</string>
+OmniFocus Search provides quick access to your OmniFocus data using Alfred using these commands:
+
+- `.s` [query] - Search active tasks
+- `.sc` [query] - Search completed tasks
+- `.p` [query] - Search projects
+- `.lp` - List all projects
+- `.i` [query] - Search inbox items
+- `.li` - List all inbox items
+- `.t` [query] - Search tags
+- `.lt` - List all tags
+- `.f` [query] - Search folders
+- `.lf` - List all folders
+- `.v` [query] - Search perspectives
+- `.lv` - List all perspectives
+- `.n` [query] - Search task notes
+
+## Feedback and Support
+
+If you encounter a problem, want to request a feature you can raise a request at the workflow [GitHub repository](https://github.com/rhydlewis/omnifocus-search/issues)
+When reporting issues: Please include as much detail as possible, such as your macOS version, OmniFocus version, and steps to reproduce the problem.
+
+## Support the Developer
+
+If you find this workflow useful and would like to show your appreciation, you can [buy me a coffee](https://buymeacoffee.com/rhyd). Cheers!</string>
 	<key>uidata</key>
 	<dict>
 		<key>1263DF33-54C7-4A78-8A2A-EAFC9BA3C8E4</key>
@@ -1377,20 +1394,6 @@ Use `.h` for more details on this workflow and the cache.</string>
 			<key>ypos</key>
 			<real>1150</real>
 		</dict>
-		<key>OL-KEYWORD-UID</key>
-		<dict>
-			<key>xpos</key>
-			<real>1375</real>
-			<key>ypos</key>
-			<real>1280</real>
-		</dict>
-		<key>OL-ACTION-UID</key>
-		<dict>
-			<key>xpos</key>
-			<real>1655</real>
-			<key>ypos</key>
-			<real>1270</real>
-		</dict>
 		<key>9788455E-A15B-42AC-BCAF-B8AB83F58E1A</key>
 		<dict>
 			<key>xpos</key>
@@ -1425,6 +1428,20 @@ Use `.h` for more details on this workflow and the cache.</string>
 			<real>95</real>
 			<key>ypos</key>
 			<real>445</real>
+		</dict>
+		<key>OL-ACTION-UID</key>
+		<dict>
+			<key>xpos</key>
+			<real>1655</real>
+			<key>ypos</key>
+			<real>1270</real>
+		</dict>
+		<key>OL-KEYWORD-UID</key>
+		<dict>
+			<key>xpos</key>
+			<real>1375</real>
+			<key>ypos</key>
+			<real>1280</real>
 		</dict>
 		<key>f-script</key>
 		<dict>
@@ -1486,20 +1503,27 @@ Use `.h` for more details on this workflow and the cache.</string>
 	<key>userconfigurationconfig</key>
 	<array>
 		<dict>
-			<key>variable</key>
-			<string>caching_enabled</string>
-			<key>type</key>
-			<string>checkbox</string>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+			</dict>
+			<key>description</key>
+			<string></string>
 			<key>label</key>
 			<string>Enable Caching</string>
-			<key>text</key>
-			<string>Cache search results for improved performance</string>
-			<key>default</key>
-			<string>0</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>caching_enabled</string>
 		</dict>
 	</array>
 	<key>version</key>
-	<string>2.2.7</string>
+	<string>2.2.8</string>
 	<key>webaddress</key>
 	<string>https://github.com/rhydlewis/omnifocus-search</string>
 </dict>
