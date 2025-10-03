@@ -40,9 +40,10 @@ function run(argv) {
     ];
 
     // Process built-in perspectives
+    const lowerQuery = query.toLowerCase();
     for (let i = 0; i < builtInPerspectives.length; i++) {
       const perspective = builtInPerspectives[i];
-      if (query === '' || perspective.name.includes(query)) {
+      if (query === '' || perspective.name.toLowerCase().includes(lowerQuery)) {
         const perspectiveString = perspective.id + ITEM_DELIMITER + perspective.name + ITEM_DELIMITER + 'Built-in';
         resultList.push(perspectiveString);
       }
@@ -81,7 +82,7 @@ function run(argv) {
           }
 
           // Only include if it matches the query
-          if (query === '' || perspectiveName.includes(query)) {
+          if (query === '' || perspectiveName.toLowerCase().includes(lowerQuery)) {
             const perspectiveString = perspectiveName + ITEM_DELIMITER + perspectiveName + ITEM_DELIMITER + 'Custom';
             resultList.push(perspectiveString);
           }

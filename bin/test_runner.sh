@@ -25,7 +25,7 @@ print_header() {
 # Function to run a test and print the result
 run_test() {
   local script_name="$1"
-  local script_path="${WORKFLOW_DIR}/applescript/${script_name}.applescript"
+  local script_path="${WORKFLOW_DIR}/applescript/${script_name}.js"
   local test_query="$2"
   shift 2
   local extra_args=("$@")
@@ -79,7 +79,7 @@ check_omnifocus() {
 main() {
   print_header "OmniFocus Search Test Runner"
 
-  echo "This script will test each AppleScript file with sample queries."
+  echo "This script will test each JXA script file with sample queries."
   echo "Make sure OmniFocus is running before proceeding."
   echo
   echo "Workflow directory: ${WORKFLOW_DIR}"
@@ -89,10 +89,13 @@ main() {
   check_omnifocus
 
   # Test task searching
-  print_header "Testing Task Search Scripts"
-  run_test "search_tasks" "add" "false" "false" "true"
-  run_test "search_tasks" "schedule" "false" "true" "true"
-  run_test "search_tasks" "call" "true" "false" "false"
+  # completed=false, flagged=false, active_only=true
+  print_header "Testing Task Search - active, non flagged"
+  run_test "search_tasks" "contact" "false" "false" "true"
+  print_header "Testing Task Search - active & flagged"
+  run_test "search_tasks" "update" "false" "true" "true"
+  print_header "Testing Task Search - completed"
+  run_test "search_tasks" "email" "true" "false" "false"
 
   # Test project searching
   print_header "Testing Project Search Scripts"
@@ -108,7 +111,7 @@ main() {
 
   # Test inbox searching
   print_header "Testing Inbox Search Scripts"
-  run_test "search_inbox" "fast"
+  run_test "search_inbox" "item"
 
   # Test perspectives listing
   print_header "Testing Perspectives Scripts"
