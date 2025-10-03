@@ -198,7 +198,7 @@ execute_and_cache() {
   echo "Params: $additional_params" >> "${settings_dir}/execute_debug.log"
 
   # Check if caching is enabled by reading the file directly
-  local caching_enabled="true"
+  local caching_enabled="false"
   if [ -f "${settings_dir}/OF_CACHING_ENABLED" ]; then
     caching_enabled=$(cat "${settings_dir}/OF_CACHING_ENABLED")
   fi
