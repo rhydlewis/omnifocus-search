@@ -73,6 +73,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>OL-KEYWORD-UID</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>OL-ACTION-UID</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8149A1E9-EE2D-4524-86E4-103E160413B4</key>
 		<array>
 			<dict>
@@ -921,6 +934,21 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string>~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings/performance.log</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>OL-ACTION-UID</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
@@ -936,6 +964,27 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>6E832BD7-8439-4B30-87B7-34848406EF39</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>.ol</string>
+				<key>subtext</key>
+				<string>Open the performance log file</string>
+				<key>text</key>
+				<string>Open Performance Log</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>OL-KEYWORD-UID</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1327,6 +1376,20 @@ Use `.h` for more details on this workflow and the cache.</string>
 			<real>1655</real>
 			<key>ypos</key>
 			<real>1150</real>
+		</dict>
+		<key>OL-KEYWORD-UID</key>
+		<dict>
+			<key>xpos</key>
+			<real>1375</real>
+			<key>ypos</key>
+			<real>1280</real>
+		</dict>
+		<key>OL-ACTION-UID</key>
+		<dict>
+			<key>xpos</key>
+			<real>1655</real>
+			<key>ypos</key>
+			<real>1270</real>
 		</dict>
 		<key>9788455E-A15B-42AC-BCAF-B8AB83F58E1A</key>
 		<dict>
