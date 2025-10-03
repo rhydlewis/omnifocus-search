@@ -8,7 +8,7 @@ query="$1"
 
 echo "Testing with query: $query"
 echo "WORKFLOW_DIR: $WORKFLOW_DIR"
-echo "Script path: ${WORKFLOW_DIR}/applescript/test.applescript"
+echo "Script path: ${WORKFLOW_DIR}/applescript/search_tasks.js"
 
-# Run the test AppleScript directly
-/usr/bin/osascript "${WORKFLOW_DIR}/applescript/test.applescript" "$query"
+# Run the JXA script directly
+/usr/bin/osascript "${WORKFLOW_DIR}/applescript/search_tasks.js" "$query"
