@@ -241,11 +241,28 @@
         <h2>Managing the Cache</h2>
         <p>
           OmniFocus Search uses a cache system to improve performance and reduce
-          the load on OmniFocus. The cache is stored in
+          the load on OmniFocus. Caching is <strong>disabled</strong> by default. 
+          The cache is stored in
           <code
             >~/Library/Caches/com.runningwithcrayons.Alfred/Workflow
             Data/net.rhydlewis.alfred.omnifocussearch</code
           >.
+        </p>
+
+        <h3>Enabling and Disabling Cache</h3>
+        <p>You can enable or disable caching entirely with these commands:</p>
+        <ul>
+          <li>
+            <code class="command">.ce</code> - Enable caching (default behavior)
+          </li>
+          <li>
+            <code class="command">.cd</code> - Disable caching (always fetch
+            fresh results)
+          </li>
+        </ul>
+        <p>
+          The <code class="command">.cc</code> menu will show the current
+          caching status.
         </p>
 
         <h3>Cache Commands</h3>
@@ -283,31 +300,15 @@
           </li>
         </ul>
 
-        <h3>Enabling and Disabling Cache</h3>
-        <p>You can enable or disable caching entirely with these commands:</p>
-        <ul>
-          <li>
-            <code class="command">.ce</code> - Enable caching (default behavior)
-          </li>
-          <li>
-            <code class="command">.cd</code> - Disable caching (always fetch
-            fresh results)
-          </li>
-        </ul>
-        <p>
-          The <code class="command">.cc</code> menu will show the current
-          caching status.
-        </p>
-
-        <div class="note">
-          <strong>When to disable caching:</strong> Disable caching when you
-          need absolutely up-to-date results from OmniFocus. This ensures you
-          always see the latest data but performance may be slightly slower.
-        </div>
         <div class="note">
           <strong>When to enable caching:</strong> Enable caching for regular
           daily use to improve performance and reduce load times, especially
           with large OmniFocus databases or if you feel performance is slow.
+        </div>
+        <div class="note">
+          <strong>When to disable caching:</strong> Disable caching when you
+          need absolutely up-to-date results from OmniFocus. This ensures you
+          always see the latest data but performance may be slightly slower.
         </div>
 
         <h3>Cache Statistics</h3>

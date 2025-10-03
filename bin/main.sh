@@ -105,13 +105,6 @@ Search Commands:
   n   - Search notes
         Usage: main.sh "search term" n
 
-Database Commands:
-  find-of-db  - Find OmniFocus database location
-                Usage: main.sh "" find-of-db
-
-  set-of-db   - Set OmniFocus database path
-                Usage: main.sh "/path/to/database" set-of-db
-
 Cache Commands:
   clear-cache    - Clear all cache or specific entity cache
                    Usage: main.sh "clear" clear-cache (clear all)
@@ -126,12 +119,6 @@ Cache Commands:
 
   cache-commands - Show available cache commands
                    Usage: main.sh "" cache-commands
-
-  enable-caching  - Enable caching
-                    Usage: main.sh "enable" enable-caching
-
-  disable-caching - Disable caching
-                    Usage: main.sh "disable" disable-caching
 
 Update Commands:
   check-update   - Check for workflow updates
@@ -164,9 +151,8 @@ SCRIPT DETECTION:
   JXA (.js) based on the file extension in the applescript/ directory.
 
 CACHING:
-  Caching is enabled by default and can improve performance significantly.
-  Cache settings are stored in:
-  ~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings/
+  Caching is disabled by default and can improve performance significantly.
+  Configure caching via the Alfred workflow configuration UI (click the [x] button in Alfred).
 
 LOGS:
   Debug logs: execute_debug.log
@@ -197,15 +183,12 @@ execute_and_cache() {
   echo "Query: $query" >> "${settings_dir}/execute_debug.log"
   echo "Params: $additional_params" >> "${settings_dir}/execute_debug.log"
 
-  # Check if caching is enabled by reading the file directly
-  local caching_enabled="false"
-  if [ -f "${settings_dir}/OF_CACHING_ENABLED" ]; then
-    caching_enabled=$(cat "${settings_dir}/OF_CACHING_ENABLED")
-  fi
-  echo "Caching status: $caching_enabled" >> "${settings_dir}/execute_debug.log"
+  # Check if caching is enabled from Alfred environment variable
+  local caching_status=$(is_caching_enabled)
+  echo "Caching status: $caching_status" >> "${settings_dir}/execute_debug.log"
 
   # Check cache first if caching is enabled
-  if [[ "$caching_enabled" == "true" ]]; then
+  if [[ "$caching_status" == "true" ]]; then
     cached_results=$(get_cache "$entity_type" "$query" "$additional_params")
     if [[ $? -eq 0 ]]; then
       # Cache hit
@@ -282,7 +265,7 @@ execute_and_cache() {
   xml_output=$(generate_xml_output "$entity_type" "$results")
 
   # Save to cache if enabled
-  if [[ "$caching_enabled" == "true" ]]; then
+  if [[ "$caching_status" == "true" ]]; then
     echo "Saving results to cache" >> "${settings_dir}/execute_debug.log"
     save_cache "$entity_type" "$query" "$additional_params" "$xml_output"
   else
@@ -337,14 +320,6 @@ case "$command_type" in
 
   "n") # Search notes
     execute_and_cache "note" "${WORKFLOW_DIR}/applescript/search_notes.js" "$query" ""
-    ;;
-
-  "find-of-db") # Find OmniFocus database
-    find_omnifocus_database
-    ;;
-
-  "set-of-db") # Set OmniFocus database path
-    set_omnifocus_database_path "$query"
     ;;
 
   "clear-cache") # Clear cache
@@ -427,24 +402,6 @@ case "$command_type" in
 
   "cache-commands") # Show cache commands
     "${WORKFLOW_DIR}/bin/cache_commands.sh" "$query"
-    ;;
-
-  "enable-caching") # Enable caching
-    # Handle "enable" as a command without arguments
-    if [[ "$query" == "enable" || -z "$query" ]]; then
-      enable_caching
-    else
-      show_error "Invalid Command" "Expected 'enable' but got '$query'"
-    fi
-    ;;
-
-  "disable-caching") # Disable caching
-    # Handle "disable" as a command without arguments
-    if [[ "$query" == "disable" || -z "$query" ]]; then
-      disable_caching
-    else
-      show_error "Invalid Command" "Expected 'disable' but got '$query'"
-    fi
     ;;
 
   "check-update") # Check for updates
