@@ -21,6 +21,7 @@ zip -r "$OUTPUT_FILE" \
     bin/config.sh \
     bin/error_handler.sh \
     bin/format_xml.sh \
+    bin/format_available_tasks.sh \
     bin/main.sh \
     bin/cache_manager.sh \
     bin/cache_commands.sh \

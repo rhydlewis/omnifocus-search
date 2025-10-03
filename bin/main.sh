@@ -105,6 +105,14 @@ Search Commands:
   n   - Search notes
         Usage: main.sh "search term" n
 
+  sa  - Search available (unblocked) tasks
+        Usage: main.sh "search term" sa
+        Returns tasks not blocked by project status or defer dates
+
+  sav - Search available tasks (verbose)
+        Usage: main.sh "search term" sav
+        Same as sa but shows count of blocked tasks
+
 Cache Commands:
   clear-cache    - Clear all cache or specific entity cache
                    Usage: main.sh "clear" clear-cache (clear all)
@@ -320,6 +328,26 @@ case "$command_type" in
 
   "n") # Search notes
     execute_and_cache "note" "${WORKFLOW_DIR}/applescript/search_notes.js" "$query" ""
+    ;;
+
+  "sa") # Search available (unblocked) tasks
+    result=$(osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_available_tasks.js" "$query" 2>&1)
+
+    if [[ $? -eq 0 ]]; then
+      "${WORKFLOW_DIR}/bin/format_available_tasks.sh" "$result" "false"
+    else
+      handle_jxa_error "$result"
+    fi
+    ;;
+
+  "sav") # Search available tasks (verbose with blocked count)
+    result=$(osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_available_tasks.js" "$query" 2>&1)
+
+    if [[ $? -eq 0 ]]; then
+      "${WORKFLOW_DIR}/bin/format_available_tasks.sh" "$result" "true"
+    else
+      handle_jxa_error "$result"
+    fi
     ;;
 
   "clear-cache") # Clear cache

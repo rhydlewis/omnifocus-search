@@ -121,6 +121,13 @@ main() {
   print_header "Testing Notes Search Scripts"
   run_test "search_notes" "come"
 
+  # Test available tasks searching
+  print_header "Testing Available Tasks Search - with query"
+  run_test "search_available_tasks" "meeting"
+
+  print_header "Testing Available Tasks Search - all available tasks"
+  run_test "search_available_tasks" ""
+
   print_header "Test Summary"
   echo "All tests executed. Check the results above for any errors."
   echo "Note: Some tests may show 'No results returned' if no matching items were found."

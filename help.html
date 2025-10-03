@@ -210,22 +210,48 @@
         </p>
 
         <h3>Search Commands</h3>
+        <strong>Tasks</strong>
         <ul>
           <li><code class="command">.s [query]</code> - Search active tasks</li>
-          <li>
-            <code class="command">.sc [query]</code> - Search completed tasks
-          </li>
-          <li><code class="command">.p [query]</code> - Search projects</li>
-          <li><code class="command">.lp</code> - List all projects</li>
+          <li><code class="command">.sa [query]</code> - Search available (unblocked) tasks</li>
+          <li><code class="command">.sc [query]</code> - Search completed tasks</li>
           <li><code class="command">.i [query]</code> - Search inbox items</li>
           <li><code class="command">.li</code> - List all inbox items</li>
+        </ul>
+        <strong>Projects</strong>
+        <ul>
+          <li><code class="command">.p [query]</code> - Search projects</li>
+          <li><code class="command">.lp</code> - List all projects</li>
+        </ul>
+        <strong>Tags</strong>
+        <ul>
           <li><code class="command">.t [query]</code> - Search tags</li>
           <li><code class="command">.lt</code> - List all tags</li>
+        </ul>
+        <strong>Folders</strong>
+        <ul>
           <li><code class="command">.f [query]</code> - Search folders</li>
           <li><code class="command">.lf</code> - List all folders</li>
+        </ul>
+        <strong>Perspectives</strong>
+        <ul>
           <li><code class="command">.v [query]</code> - Search perspectives</li>
           <li><code class="command">.lv</code> - List all perspectives</li>
+        </ul>
+        <strong>Notes</strong>
+        <ul>
           <li><code class="command">.n [query]</code> - Search task notes</li>
+        </ul>
+
+        <h3>Available Tasks Search</h3>
+        <p>
+          The <code class="command">.sa</code> command searches only for tasks that are ready to work on <em>right now</em>, automatically filtering out:
+        </p>
+        <ul>
+          <li>Tasks in projects that are on hold</li>
+          <li>Tasks in projects with future defer dates</li>
+          <li>Tasks with their own future defer dates</li>
+          <li>Tasks blocked by sequential project ordering (shows only the first incomplete task in sequential projects)</li>
         </ul>
 
         <h3>Update Command</h3>
@@ -240,7 +266,7 @@
       <section class="section">
         <h2>Managing the Cache</h2>
         <p>
-          OmniFocus Search uses a cache system to improve performance and reduce
+          OmniFocus Search can use a cache system to improve performance and reduce
           the load on OmniFocus. Caching is <strong>disabled</strong> by default. 
           The cache is stored in
           <code
@@ -250,16 +276,7 @@
         </p>
 
         <h3>Enabling and Disabling Cache</h3>
-        <p>You can enable or disable caching entirely with these commands:</p>
-        <ul>
-          <li>
-            <code class="command">.ce</code> - Enable caching (default behavior)
-          </li>
-          <li>
-            <code class="command">.cd</code> - Disable caching (always fetch
-            fresh results)
-          </li>
-        </ul>
+        <p>You can enable or disable caching by choosing Configure... from Alfred > Workflows > OmniFocus Search</p>
         <p>
           The <code class="command">.cc</code> menu will show the current
           caching status.
@@ -268,7 +285,7 @@
         <h3>Cache Commands</h3>
         <p>
           Use <code class="command">.cc</code> to access the cache management
-          menu. From there, you can:
+          menu. From there, you can - if caching is enabled:
         </p>
 
         <ul>

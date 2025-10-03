@@ -13,6 +13,7 @@ This workflow allows you to quickly search and navigate OmniFocus data directly 
 The workflow provides multiple keyword commands to search different types of OmniFocus data:
 
 - `.s [query]` - Search active tasks
+- `.sa [query]` - Search available (unblocked) tasks - excludes tasks blocked by project status or defer dates
 - `.sc [query]` - Search completed tasks
 - `.p [query]` - Search projects
 - `.lp` - List projects
@@ -29,9 +30,18 @@ The workflow provides multiple keyword commands to search different types of Omn
 ### Examples
 
 - `.s meeting` - Find all active tasks containing "meeting"
+- `.sa urgent` - Find available tasks containing "urgent" (excludes blocked tasks)
 - `.sc report` - Find completed tasks containing "report"
 - `.p home` - Find projects containing "home"
 - `.t work` - Find tags containing "work"
+
+### Available Tasks
+
+The `.sa` command searches only for tasks that are ready to work on now, filtering out:
+- Tasks in projects that are on hold
+- Tasks in projects with future defer dates
+- Tasks with their own future defer dates
+- Tasks blocked by sequential project ordering (only shows first incomplete task)
 
 ## Requirements
 
