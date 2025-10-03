@@ -63,6 +63,120 @@ if [[ "$query" == "(null)" ]]; then
 fi
 command_type="$2"
 
+# Show help if -h flag is passed
+if [[ "$query" == "-h" || "$command_type" == "-h" ]]; then
+  cat << 'EOF'
+OmniFocus Search Workflow - Main Script Usage
+
+SYNOPSIS:
+  main.sh <query> <command_type>
+
+PARAMETERS:
+  query         - Search query string or command argument
+  command_type  - Type of search or command to execute
+
+COMMAND TYPES:
+
+Search Commands:
+  s   - Search active tasks
+        Usage: main.sh "search term" s
+        Parameters: completed=false, flagged=false, active_only=true
+
+  sc  - Search completed tasks
+        Usage: main.sh "search term" sc
+        Parameters: completed=true, flagged=false, active_only=false
+
+  p   - Search projects
+        Usage: main.sh "project name" p
+        Parameters: active_only=true
+
+  i   - Search inbox
+        Usage: main.sh "search term" i
+
+  t   - Search tags
+        Usage: main.sh "tag name" t
+
+  f   - Search folders
+        Usage: main.sh "folder name" f
+
+  v   - List perspectives
+        Usage: main.sh "perspective name" v
+
+  n   - Search notes
+        Usage: main.sh "search term" n
+
+Database Commands:
+  find-of-db  - Find OmniFocus database location
+                Usage: main.sh "" find-of-db
+
+  set-of-db   - Set OmniFocus database path
+                Usage: main.sh "/path/to/database" set-of-db
+
+Cache Commands:
+  clear-cache    - Clear all cache or specific entity cache
+                   Usage: main.sh "clear" clear-cache (clear all)
+                   Usage: main.sh "task" clear-cache (clear task cache)
+
+  rebuild-cache  - Rebuild all cache or specific entity cache
+                   Usage: main.sh "rebuild" rebuild-cache (rebuild all)
+                   Usage: main.sh "task" rebuild-cache (rebuild task cache)
+
+  cache-stats    - Show cache statistics
+                   Usage: main.sh "stats" cache-stats
+
+  cache-commands - Show available cache commands
+                   Usage: main.sh "" cache-commands
+
+  enable-caching  - Enable caching
+                    Usage: main.sh "enable" enable-caching
+
+  disable-caching - Disable caching
+                    Usage: main.sh "disable" disable-caching
+
+Update Commands:
+  check-update   - Check for workflow updates
+                   Usage: main.sh "" check-update
+
+  install-update - Install workflow update
+                   Usage: main.sh "download_url" install-update
+
+EXAMPLES:
+  # Search for active tasks containing "meeting"
+  main.sh "meeting" s
+
+  # Search completed tasks
+  main.sh "report" sc
+
+  # Search for a project named "Website"
+  main.sh "Website" p
+
+  # Search tags
+  main.sh "urgent" t
+
+  # Clear all cache
+  main.sh "clear" clear-cache
+
+  # Show cache statistics
+  main.sh "stats" cache-stats
+
+SCRIPT DETECTION:
+  The script automatically detects whether to use AppleScript (.applescript) or
+  JXA (.js) based on the file extension in the applescript/ directory.
+
+CACHING:
+  Caching is enabled by default and can improve performance significantly.
+  Cache settings are stored in:
+  ~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings/
+
+LOGS:
+  Debug logs: execute_debug.log
+  Performance logs: performance.log
+  Logs are automatically rotated every 7 days.
+
+EOF
+  exit 0
+fi
+
 # Define the function to execute scripts (AppleScript or JXA) and format output
 execute_and_cache() {
   local entity_type="$1"
