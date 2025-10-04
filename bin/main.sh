@@ -331,22 +331,60 @@ case "$command_type" in
     ;;
 
   "sa") # Search available (unblocked) tasks
-    result=$(osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_available_tasks.js" "$query" 2>&1)
+    # Execute with timeout and performance logging
+    settings_dir="${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings"
+    mkdir -p "$settings_dir" 2>/dev/null
 
-    if [[ $? -eq 0 ]]; then
-      "${WORKFLOW_DIR}/bin/format_available_tasks.sh" "$result" "false"
-    else
+    timeout_duration=30
+    start_time=$(date +%s)
+
+    result=$(timeout "$timeout_duration" /usr/bin/osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_available_tasks.js" "$query" 2>&1)
+    exit_code=$?
+    end_time=$(date +%s)
+    duration=$((end_time - start_time))
+
+    # Log performance
+    echo "Script type: JXA" >> "${settings_dir}/performance.log"
+    echo "Script: ${WORKFLOW_DIR}/applescript/search_available_tasks.js" >> "${settings_dir}/performance.log"
+    echo "Duration: ${duration}s" >> "${settings_dir}/performance.log"
+    echo "Timestamp: $(date)" >> "${settings_dir}/performance.log"
+    echo "---" >> "${settings_dir}/performance.log"
+
+    if [[ $exit_code -eq 124 ]]; then
+      handle_jxa_error "Script execution timed out after ${timeout_duration} seconds"
+    elif [[ $exit_code -ne 0 ]]; then
       handle_jxa_error "$result"
+    else
+      "${WORKFLOW_DIR}/bin/format_available_tasks.sh" "$result" "false"
     fi
     ;;
 
   "sav") # Search available tasks (verbose with blocked count)
-    result=$(osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_available_tasks.js" "$query" 2>&1)
+    # Execute with timeout and performance logging
+    settings_dir="${HOME}/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/net.rhydlewis.alfred.omnifocussearch/settings"
+    mkdir -p "$settings_dir" 2>/dev/null
 
-    if [[ $? -eq 0 ]]; then
-      "${WORKFLOW_DIR}/bin/format_available_tasks.sh" "$result" "true"
-    else
+    timeout_duration=30
+    start_time=$(date +%s)
+
+    result=$(timeout "$timeout_duration" /usr/bin/osascript -l JavaScript "${WORKFLOW_DIR}/applescript/search_available_tasks.js" "$query" 2>&1)
+    exit_code=$?
+    end_time=$(date +%s)
+    duration=$((end_time - start_time))
+
+    # Log performance
+    echo "Script type: JXA" >> "${settings_dir}/performance.log"
+    echo "Script: ${WORKFLOW_DIR}/applescript/search_available_tasks.js" >> "${settings_dir}/performance.log"
+    echo "Duration: ${duration}s" >> "${settings_dir}/performance.log"
+    echo "Timestamp: $(date)" >> "${settings_dir}/performance.log"
+    echo "---" >> "${settings_dir}/performance.log"
+
+    if [[ $exit_code -eq 124 ]]; then
+      handle_jxa_error "Script execution timed out after ${timeout_duration} seconds"
+    elif [[ $exit_code -ne 0 ]]; then
       handle_jxa_error "$result"
+    else
+      "${WORKFLOW_DIR}/bin/format_available_tasks.sh" "$result" "true"
     fi
     ;;
 

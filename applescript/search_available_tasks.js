@@ -16,6 +16,9 @@ function run(argv) {
     sequential: 0
   };
 
+  // Cache for sequential project first incomplete tasks to avoid repeated lookups
+  const sequentialProjectCache = new Map();
+
   for (let task of flattenedTasks) {
     // Skip completed and dropped tasks
     if (task.completed() || task.dropped()) {
@@ -67,14 +70,22 @@ function run(argv) {
     // Check sequential project blocking
     if (project.sequential && project.sequential()) {
       // In sequential projects, only first incomplete task is available
-      const projectTasks = project.tasks();
-      let firstIncomplete = null;
+      const projectId = project.id();
+      let firstIncomplete = sequentialProjectCache.get(projectId);
 
-      for (let pt of projectTasks) {
-        if (!pt.completed() && !pt.dropped()) {
-          firstIncomplete = pt;
-          break;
+      // Cache miss - find and cache the first incomplete task
+      if (firstIncomplete === undefined) {
+        const projectTasks = project.tasks();
+        firstIncomplete = null;
+
+        for (let pt of projectTasks) {
+          if (!pt.completed() && !pt.dropped()) {
+            firstIncomplete = pt;
+            break;
+          }
         }
+
+        sequentialProjectCache.set(projectId, firstIncomplete);
       }
 
       if (firstIncomplete && firstIncomplete.id() !== task.id()) {

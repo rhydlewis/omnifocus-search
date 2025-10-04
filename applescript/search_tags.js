@@ -53,33 +53,8 @@ function run(argv) {
       matchingTags = matchingTags.slice(0, MAX_RESULTS);
     }
 
-    // Build task count map using a single pass through incomplete tasks
-    // This is more efficient than querying tasks for each tag
-    const tagCountMap = {};
-
-    // Get all incomplete tasks
-    const incompleteTasks = doc.flattenedTasks.whose({
-      completed: false
-    })();
-
-    // Count tasks per tag
-    for (let i = 0; i < incompleteTasks.length; i++) {
-      const task = incompleteTasks[i];
-      const taskTags = task.tags();
-
-      for (let j = 0; j < taskTags.length; j++) {
-        const taskTag = taskTags[j];
-        const tagId = taskTag.id();
-
-        if (tagCountMap[tagId]) {
-          tagCountMap[tagId]++;
-        } else {
-          tagCountMap[tagId] = 1;
-        }
-      }
-    }
-
-    // Process results using the count map
+    // Process results - get task count directly from each matched tag
+    // This is much more efficient than iterating through all tasks
     const resultList = [];
 
     for (let i = 0; i < matchingTags.length; i++) {
@@ -87,8 +62,9 @@ function run(argv) {
       const tagId = tag.id();
       const tagName = tag.name() || '';
 
-      // Look up count from map
-      const taskCount = tagCountMap[tagId] || 0;
+      // Get incomplete tasks for this specific tag only
+      const tagTasks = tag.tasks.whose({ completed: false })();
+      const taskCount = tagTasks.length;
 
       // Format as: id|name|taskCount
       const tagString = tagId + ITEM_DELIMITER + tagName + ITEM_DELIMITER + taskCount;
